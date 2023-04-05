@@ -1,0 +1,7 @@
+# Project exclude paths
+/out/
+/q12.Controller/target/
+/q12.Dao/target/
+/q12.Entry/target/
+/q12.Service/target/
+/q12.Web/target/

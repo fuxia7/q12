@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<!--  <bean id="b" class="com.qr.Celebrity" >
+     <property name="name" value="小傅"></property>
+    </bean>
+    <context:property-placeholder location="classpath:a.properties"/>
+
+      <bean class="com.qr.Postposition"></bean>
+
+    <bean id="c" class="com.qr.User" init-method="aa" destroy-method="bb">
+    <property name="code" value="1"></property>
+     <property name="name" value="#{T(com.qr.Celebrity).qr()}"></property>
+     <property name="bzd" value="#{1==2?10:20}"></property>
+     <property name="ce" value="#{b}"></property>
+    </bean>
+
+    <bean id="a" class="com.qr.User" p:code="710" p:name="李宁玉" scope="prototype"> </bean> -->
+
+	<!-- <bean id="jing" class="com.qr.Factory1"></bean> -->
+	<!-- <bean id="fu" class="com.qr.Factory3">
+     <constructor-arg value="a"></constructor-arg>
+    </bean> -->
+
+	<!--  <bean id="d" class="com.qr.User" parent="a" p:name="不知道"></bean> -->
+
+	<!-- <context:property-placeholder location="classpath:a.properties"/> -->
+	<context:component-scan base-package="com.zsgc" use-default-filters="true">
+		<context:exclude-filter type="annotation"  expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation"  expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+		<!-- <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Component"/>   -->
+		<!-- <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/> -->
+
+		<!-- <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/> -->
+	</context:component-scan>
+
+	<!-- <aop:aspectj-autoproxy></aop:aspectj-autoproxy> -->
+
+	<!-- <bean id="myasp" class="com.qr.aop.Asp"></bean>
+
+    <aop:config >
+     <aop:pointcut expression="execution(public * com.qr.aop.Arithme.*(..))" id="rt"/>
+     <aop:aspect ref="myasp">
+     <aop:before method="lny" pointcut-ref="rt"/>
+     <aop:after method="fs" pointcut-ref="rt"/>
+     <aop:after-returning method="fj" pointcut-ref="rt" returning="pao"/>
+     <aop:after-throwing method="zbc" pointcut-ref="rt" throwing="fu"/>
+
+     </aop:aspect>
+
+    </aop:config> -->
+
+	<bean id="ljc" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="user" value="root"></property>
+		<property name="password" value="910910"></property>
+		<property name="driverClass" value="com.mysql.cj.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://192.168.31.142:3306/q1?serverTimezone=Asia/Shanghai"></property>
+
+	</bean>
+
+	<!--<bean id="ljc" class="org.springframework.jndi.JndiObjectFactoryBean">
+	<property name="jndiName">
+		<value>java:comp/env/zx</value>
+	</property>
+	</bean>-->
+
+	<!--<bean id="diao" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="ljc"></property>
+
+	</bean>
+
+	<bean id="ziduan" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="ljc"></constructor-arg>
+	</bean>-->
+
+
+
+	<!-- <bean id="shi" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+      <property name="dataSource" ref="ljc"></property>
+    </bean>
+  事务
+    <tx:annotation-driven transaction-manager="shi"/>
+
+    <tx:annotation-driven/>
+
+
+   <tx:advice id="abc" transaction-manager="shi">
+     <tx:attributes>
+       <tx:method name="get*" read-only="true"/>
+       <tx:method name="find*" read-only="true"/>
+       <tx:method name="*"/>
+
+     </tx:attributes>
+
+   </tx:advice>
+
+    <aop:config>
+      <aop:pointcut expression="execution(public * com.shiwu.*.*(..))" id="zhi"/>
+     <aop:advisor advice-ref="abc" pointcut-ref="zhi"/>
+
+    </aop:config>  -->
+
+
+	<!-- 配置 EntityManagerFactory -->
+	<!--<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="ljc"></property>
+		&lt;!&ndash; 配置 JPA 提供商的适配器. 可以通过内部 bean 的方式来配置 &ndash;&gt;
+		&lt;!&ndash;<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></bean>
+		</property>&ndash;&gt;
+		&lt;!&ndash; 配置实体类所在的包 &ndash;&gt;
+		<property name="packagesToScan" value="com.zsgc.yg"></property>
+		&lt;!&ndash; 配置二级缓存的策略	@cacheable(true)的实体类将被缓存 &ndash;&gt;
+		&lt;!&ndash;<property name="sharedCacheMode" value="ENABLE_SELECTIVE"></property>&ndash;&gt;
+		&lt;!&ndash; 配置 JPA 的基本属性. 例如 JPA 实现产品的属性 &ndash;&gt;
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.id.new_generator_mappings">false</prop>&lt;!&ndash; 这个默认是true,只有设置为false才会使用id自增长 &ndash;&gt;
+				<prop key="hibernate.show_sql">true</prop>&lt;!&ndash; 是否显示sql &ndash;&gt;
+				<prop key="hibernate.format_sql">true</prop>&lt;!&ndash; 输出格式化后的sql,更方便查看 &ndash;&gt;
+				<prop key="hibernate.hbm2ddl.auto">update</prop>&lt;!&ndash; 这里配置的是update策略,自动更新表 &ndash;&gt;
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>&lt;!&ndash; 是否使用二级缓存 &ndash;&gt;
+			</props>
+		</property>
+	</bean>
+
+	&lt;!&ndash; 配置 JPA 使用的事务管理器 &ndash;&gt;
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	&lt;!&ndash; 配置支持基于注解是事务配置 &ndash;&gt;
+	<tx:annotation-driven transaction-manager="transactionManager"/>-->
+
+	<!--
+		 创建sqlSessionFactory,生成sqlSession -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="ljc"></property>
+		<property name="typeAliasesPackage" value="com.zsgc.yg"></property>
+		<property name="mapperLocations" value="classpath:hh/*.xml"></property>
+	</bean>
+
+	<!-- mybatis自动扫描加载Sql映射文件 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.zsgc.dao"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+
+
+	<!-- 事务管理器 -->
+	<bean id="txManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="ljc" />
+	</bean>
+
+	<!-- 事务注解驱动，标注@Transactional的类和方法将具有事务性 -->
+	<tx:annotation-driven transaction-manager="txManager" />
+
+
+
+
+
+
+
+
+	<!-- <bean id="q1" class="com.qr.mvc.dao.Fdao"></bean>
+
+    <bean id="q2" class="com.qr.mvc.service.Fservice">
+      <property name="fdao" ref="q1"></property>
+    </bean>
+
+    <bean id="q3" class="com.qr.mvc.servlet.Fservlet">
+      <property name="service" ref="q2"></property>
+    </bean> -->
+
+
+</beans>

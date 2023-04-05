@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+ <context:component-scan base-package="com.zsgc" use-default-filters="false">
+   <context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+		<!-- <context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Component" /> -->
+ </context:component-scan>
+ 
+ <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+ <property name="prefix" value="/WEB-INF/"></property>
+ <property name="suffix" value=".jsp"></property>
+ </bean>
+ 
+ <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+     <property name="order" value="26"></property>
+ 
+ </bean>
+ 
+ 
+ <!--可以直接跳WEB-INF下的文件  -->
+ <mvc:view-controller path="/tr" view-name="qr"/>
+ <!-- 不拦截 -->
+ <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+ 
+ <mvc:default-servlet-handler/>
+
+<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+       <property name="converters">
+
+
+              <list>
+                  <!-- 日期类型转换 -->
+                  <bean class="com.zsgc.dao.Userdate" />
+              </list>
+
+       
+       </property>
+</bean>
+  
+  <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+    <property name="basename" value="abc"></property>
+  </bean>
+ 
+   <!-- 配置 SessionLocalResolver -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver"></bean>
+	
+	<mvc:interceptors>
+		<!-- 配置 LocaleChanceInterceptor -->
+		<!-- <mvc:interceptor>
+		<mvc:mapping path="/*"/>
+		<mvc:exclude-mapping path="/queryuser"/>
+		<bean class="com.Inter"></bean>
+		</mvc:interceptor> -->
+		
+		<bean class="com.zsgc.dao.Inter"></bean>
+		<bean class="com.zsgc.dao.Inter1"></bean>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"></bean>
+	</mvc:interceptors>
+ 
+ 
+      <bean id="multipartResolver" 
+      class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+         <property name="defaultEncoding" value="utf-8"></property>
+         <property name="maxUploadSize" value="10240000"></property>
+         <property name="resolveLazily" value="true" />
+      </bean> 
+   
+   <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+     <property name="exceptionAttribute" value="py"></property>
+     <property name="exceptionMappings">
+       <props>
+       <prop key="Exception">cg</prop>
+       </props>
+     </property>
+   </bean>
+ 
+   
+
+</beans>

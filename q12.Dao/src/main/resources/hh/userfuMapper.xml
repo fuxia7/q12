@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsgc.dao.UserfuMapper">
+	<!-- 
+	查询所有数据 -->
+	<select id="query1" resultType="userfu">
+		select * from boo
+	</select>
+
+	<!--
+	查询所有数据 -->
+	<select id="query" resultType="userfu">
+		select * from boo limit #{pageno},#{pagesize}
+	</select>
+
+	<!--
+	通过id查询数据 -->
+	<select id="count" resultType="int" >
+		select count(*) from boo
+	</select>
+
+	<!--
+	删除数据 -->
+	<delete id ="delete" parameterType="int">
+		delete from boo where t_id=#{t_id}
+	</delete>
+
+
+	<!--
+	添加数据 -->
+	<insert id="increase" parameterType="userfu">
+		insert into boo(namee) value(#{namee})
+	</insert>
+
+
+
+	<!--
+	修改数据-->
+	<update id="modify" parameterType="userfu">
+		update boo set
+						namee=#{namee}
+		where t_id=#{t_id}
+	</update>
+
+
+	<select id="queryid" parameterType="int" resultType="userfu">
+		select * from boo where t_id=#{t_id}
+	</select>
+
+	<select id="pd" resultType="int">
+		select distinct tid from book
+	</select>
+
+
+	
+
+	
+
+</mapper>
